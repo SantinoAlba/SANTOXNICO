@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fusión IA: Duki x Emilia Mernes</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <h1>🎶 Fusioná artistas con IA</h1>
+
+  <div class="artistas">
+    <div class="artista" onclick="seleccionarArtista('Duki')">
+      <img src="media/duki.jpg" alt="Duki">
+      <p>Duki</p>
+    </div>
+
+    <div class="artista" onclick="seleccionarArtista('Emilia Mernes')">
+      <img src="media/emilia.jpg" alt="Emilia Mernes">
+      <p>Emilia Mernes</p>
+    </div>
+  </div>
+
+  <div id="resultado"></div>
+  <audio id="fusionSound" controls style="display:none"></audio>
+  <button class="btn-reset" onclick="resetear()">Reiniciar</button>
+
+  <script>
+  let seleccionados = [];
+
+  function seleccionarArtista(nombre) {
+    if (seleccionados.includes(nombre)) return;
+    seleccionados.push(nombre);
+
+    if (seleccionados.length === 1) {
+      document.getElementById('resultado').innerText = `🎤 Elegiste a ${nombre}. Elegí otro artista para fusionar.`;
+    } 
+    else if (seleccionados.length === 2) {
+      const [a1, a2] = seleccionados;
+      fusionarArtistas(a1, a2);
+    }
+  }
+
+  function fusionarArtistas(a1, a2) {
+    const resultado = document.getElementById('resultado');
+    resultado.innerText = `🔥 La IA fusionó a ${a1} y ${a2} en una canción única: "${a1} x ${a2} - Universo Alterno"`;
+
+    // Audio de muestra (podés reemplazarlo por tu propio .mp3)
+    const audio = document.getElementById('fusionSound');
+    audio.src = "media/fusion.mp3";
+    audio.style.display = "block";
+    audio.play();
+  }
+
+  function resetear() {
+    seleccionados = [];
+    document.getElementById('resultado').innerText = "";
+    const audio = document.getElementById('fusionSound');
+    audio.pause();
+    audio.currentTime = 0;
+    audio.style.display = "none";
+  }
+  </script>
+
+</body>
+</html>
