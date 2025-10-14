@@ -1,0 +1,16 @@
+body {
+  background: url('media/home.png') no-repeat center center fixed;
+  background-size: cover;
+}
+
+.MP3 {
+  position: absolute;
+  top: 650px;   
+  left: 450px;  
+  z-index: 10; 
+}
+
+.MP3 img {
+    width: 40px; 
+    height: auto;
+}

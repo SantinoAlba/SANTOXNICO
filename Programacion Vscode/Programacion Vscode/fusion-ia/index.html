@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Remix</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <h1>Remix</h1>
+
+  <!-- Contenedor del mensaje dinámico -->
+  <div id="resultado"></div>
+
+  <audio id="fusionSound" controls style="display:none"></audio>
+
+  <button class="btn-mix" onclick="activarMix()">Iniciar mix </button>
+  <button class="btn-reset" id="btnReset" onclick="resetear()" style="display:none;">🔄 Reiniciar</button>
+
+  <!-- JOYSTICK -->
+  <div id="joystick" style="display:none;">
+    <p>Mové las flechas para integrar a otros artistas en la mezcla:</p>
+    <div class="controles">
+      <button onclick="mover('arriba')">🔼</button><br>
+      <button onclick="mover('izquierda')">⏹️</button>
+      <button onclick="mover('abajo')">❎</button>
+      <button onclick="mover('derecha')">➡️</button>
+    </div>
+  </div>
+
+  <!-- MUESTRA DEL ARTISTA -->
+  <div id="artistaActual">
+    <img id="fotoArtista" src="media/badgyal.jpg" alt="Artista">
+    <p id="nombreArtista">Bad Gyal</p>
+  </div>
+
+  <script>
+  let modoMix = false;
+  let intensidad = 50;
+  let artistaActual = "Emilia Mernes";
+  const audio = document.getElementById('fusionSound');
+
+  function activarMix() {
+    modoMix = true;
+    document.getElementById('resultado').innerText = "🎶 Modo mix colaborativo activado";
+    document.getElementById('joystick').style.display = "block";
+    document.getElementById('btnReset').style.display = "inline-block";
+    reproducirBase();
+  }
+
+  function reproducirBase() {
+    artistaActual = "Emilia Mernes";
+    audio.src = "media/emilia_base.mp3";
+    audio.style.display = "block";
+    audio.play();
+    mostrarArtista("Emilia Mernes", "media/emilia.jpg");
+  }
+
+  function mover(direccion) {
+    if (!modoMix) return;
+    const tiempoActual = audio.currentTime;
+
+    if (direccion === 'arriba') {
+      cambiarArtista("Bad Gyal", "media/badgyal.jpg", "media/badgyal.mp3", tiempoActual);
+    }
+    if (direccion === 'abajo') {
+      cambiarArtista("Nicki Nicole", "media/nickinicole.jpg", "media/nicki.mp3", tiempoActual);
+    }
+    if (direccion === 'izquierda') {
+      cambiarArtista("Maria Becerra", "media/maria.jpg", "media/maria.mp3", tiempoActual);
+    }
+    if (direccion === 'derecha') {
+      cambiarArtista("Tini", "media/tini.jpg", "media/tini.mp3", tiempoActual);
+    }
+  }
+
+  function cambiarArtista(nombre, foto, cancion, tiempo) {
+    mostrarArtista(nombre, foto);
+    audio.src = cancion;
+    audio.style.display = "block";
+    audio.addEventListener("loadedmetadata", function() {
+      if (tiempo < audio.duration) {
+        audio.currentTime = tiempo;
+      }
+      audio.play();
+    }, { once: true });
+
+    document.getElementById('resultado').innerText =
+      `🎤 Estás mezclando a Emilia con ${nombre}`;
+  }
+
+  function mostrarArtista(nombre, foto) {
+    const div = document.getElementById('artistaActual');
+    const img = document.getElementById('fotoArtista');
+    const p = document.getElementById('nombreArtista');
+    div.style.display = "flex";
+    img.src = foto;
+    p.innerText = nombre;
+  }
+
+  function resetear() {
+    modoMix = false;
+    audio.pause();
+    audio.currentTime = 0;
+    audio.style.display = "none";
+    document.getElementById('resultado').innerText = "";
+    document.getElementById('joystick').style.display = "none";
+    document.getElementById('artistaActual').style.display = "none";
+    document.getElementById('btnReset').style.display = "none";
+  }
+
+  // ✅ NUEVA FUNCIÓN: controlar con el teclado
+  document.addEventListener("keydown", function(event) {
+    if (!modoMix) return;
+
+    switch (event.key) {
+      case "ArrowUp":
+      case "w":
+      case "W":
+        mover("arriba");
+        break;
+      case "ArrowDown":
+      case "s":
+      case "S":
+        mover("abajo");
+        break;
+      case "ArrowLeft":
+      case "a":
+      case "A":
+        mover("izquierda");
+        break;
+      case "ArrowRight":
+      case "d":
+      case "D":
+        mover("derecha");
+        break;
+    }
+  });
+  </script>
+
+</body>
+</html>

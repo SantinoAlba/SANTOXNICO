@@ -1,0 +1,98 @@
+body {
+  font-family: 'Poppins', sans-serif;
+  background: url('media/fondorosita.png') no-repeat center center fixed;
+  background-size: cover;
+  color: rgb(0, 0, 0);
+  text-align: center;
+  height: 100vh; /* ocupa toda la pantalla */
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* centra verticalmente */
+  align-items: center;     /* centra horizontalmente */
+  transition: background 0.5s ease;
+}
+
+
+
+h1 {
+  font-size: 60px;
+  margin-bottom: 20px;
+}
+
+#resultado {
+  font-size: 1.2em;
+  margin: 15px;
+  max-width: 400px;
+}
+
+.btn-mix, .btn-reset {
+  margin: 10px;
+  background: white;
+  color: #92212B;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.btn-mix:hover, .btn-reset:hover {
+  background: #f0f0f0;
+  transform: scale(1.05);
+}
+
+/* JOYSTICK */
+#joystick {
+  margin-top: 25px;
+  animation: aparecer 0.5s ease;
+}
+
+@keyframes aparecer {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.controles button {
+  background: #fff;
+  color: #92212B;
+  border: none;
+  padding: 10px 15px;
+  margin: 5px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 1.2em;
+  transition: transform 0.2s ease;
+}
+
+.controles button:hover {
+  transform: scale(1.2);
+}
+
+/* ARTISTA ACTUAL */
+#artistaActual {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+  animation: fadeIn 0.5s ease;
+}
+
+#artistaActual img {
+  width: 130px;
+  height: 130px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 10px;
+  box-shadow: 5px 5px 15px rgba(0,0,0,0.5);
+}
+
+#nombreArtista {
+  font-size: 1.3em;
+  font-weight: bold;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
